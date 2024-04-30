@@ -5,7 +5,6 @@ import (
 	_ "fmt"
 	"sync"
 	_ "sync"
-	"time"
 	_ "time"
 )
 
@@ -27,39 +26,45 @@ func insert_B() {
 
 // los AB se hacen independientes
 func insert_C() {
+	defer wg.Done()
 	fmt.Printf("C")
 	ch3 <- ""
 }
 func insert_D() {
+	defer wg.Done()
+
 	<-ch3
 	fmt.Printf("D")
 	ch4 <- ""
 }
 func insert_E() {
+	defer wg.Done()
 	<-ch4
 	fmt.Printf("E")
 }
-func insert_AoB() {
+func insertAB() {
 	wg.Add(1)
-	time.Sleep(time.Second)
 	go insert_A()
 	go insert_B()
+
 	select {
 	case msg1 := <-ch1:
-		wg.Done()
 		fmt.Printf(msg1)
-	case msg2 := <-ch2:
 		wg.Done()
+	case msg2 := <-ch2:
 		fmt.Printf(msg2)
+		wg.Done()
 	}
 	wg.Wait()
 }
 func main() {
 
 	for {
-		insert_AoB()
+		insertAB()
+		wg.Add(3)
 		go insert_C()
 		go insert_D()
 		go insert_E()
+		wg.Wait()
 	}
 }

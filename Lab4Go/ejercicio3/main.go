@@ -5,7 +5,6 @@ import (
 	_ "fmt"
 	"sync"
 	_ "sync"
-	"time"
 	_ "time"
 )
 
@@ -40,8 +39,8 @@ func insert_D() {
 	defer wg.Done()
 
 	<-ch2
-	fmt.Printf("D")file:///home/diego/Documentos/Universidad/SO/Lab4Go/ejercicio4
-	
+	fmt.Printf("D")
+
 	ch3 <- 1
 }
 func insert_E() {
@@ -55,7 +54,6 @@ func insert_E() {
 func main() {
 	for {
 		wg.Add(5)
-		time.Sleep(time.Second * 1)
 		go insert_A()
 		go insert_B()
 		go insert_C()

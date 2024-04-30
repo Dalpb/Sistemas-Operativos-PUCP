@@ -4,7 +4,6 @@ import (
 	"fmt"
 	_ "fmt"
 	_ "sync"
-	"time"
 	_ "time"
 )
 
@@ -42,7 +41,6 @@ func insert_E() {
 
 func main() {
 	for {
-		time.Sleep(time.Second * 1)
 		go insert_A()
 		go insert_B()
 		go insert_C()
