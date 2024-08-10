@@ -1,0 +1,5 @@
+multifork(2617009)-+-multifork(2617010)-+-multifork(2617011)---multifork(2617012)
+                   |                    `-multifork(2617013)
+                   |-multifork(2617014)---multifork(2617015)
+                   |-multifork(2617016)
+                   `-sh(2617017)---pstree(2617018)

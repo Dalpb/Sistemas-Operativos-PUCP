@@ -1,0 +1,7 @@
+Hi
+This is the target file
+You can
+read
+each line 
+of my 
+content

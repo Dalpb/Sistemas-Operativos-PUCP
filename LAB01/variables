@@ -1,0 +1,12 @@
+#!/bin/bash
+msg="Sistemas Operativos,Ingrese su nombre : "
+echo $msg
+read nombre
+echo "Hola, ${nombre}"
+cursos=(SO Prog3 Diseño Redes)
+echo "Tus cursos fueron ${cursos[*]} "
+echo "Tu curso favorito fue ${cursos[1]}" 
+apellido="Palomino"
+readonly apellido
+
+
