@@ -34,7 +34,7 @@ int main(int na, char *argv[]) {
 
             for (int j = 0; j < n; j++) {
                 r = rand() % 528; 
-                //consider
+                //changing results
                 if (last_digit(r)) {
                     write(pipes[2][1], &r, sizeof(r));
                 } else if (r % 2 == 0) {
@@ -43,7 +43,7 @@ int main(int na, char *argv[]) {
                     write(pipes[0][1], &r, sizeof(r));
                 }
             }
-			//close write pipe
+			//close write pipes
             for (int j = 0; j < 3; j++) {
                 close(pipes[j][1]);
             }
