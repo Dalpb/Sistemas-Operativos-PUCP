@@ -27,13 +27,13 @@ echo "$var obtengo desde pos offset con un len caracteres : ${var:5:3}"
 echo "#param"
 echo "$var obtengo cantidad de caracteres: ${#var}"
 
-var="HelloHelloWorld"
+var="Hello\nHelloWorld\n"
 
 echo "param##word"
 echo "$var remueve los march con word en param desde el inicio: ${var#Hello} "
 
 echo "param%word"
-echo "$var remueve los march con word desde el fin : ${var%%World}"
+echo "$var remueve los march con word desde el fin : ${var%%\\n}"
 
 echo "Sustitucion con ordenes ``"
 Date=`date`

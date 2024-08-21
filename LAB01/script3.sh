@@ -1,6 +1,8 @@
 #!/bin/bash
+
 container=""
-while IFS= read -r line
+#only read if the line has a \n
+while read line  
 do
  line=( $line )
  line="${line[@]^}"
@@ -19,5 +21,5 @@ do
  container="$container$others $num\n"
 
 done < "data - pregunta 3"
-
+container=${container%%\\n}
 echo -e $container>data\ -\ pregunta\ 3
