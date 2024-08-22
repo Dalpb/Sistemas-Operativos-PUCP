@@ -2,7 +2,7 @@
 
 container=""
 #only read if the line has a \n
-while read line  
+while IFS=read -r line  
 do
  line=( $line )
  line="${line[@]^}"
