@@ -27,17 +27,18 @@ int main(int argc,char *argv[]){
     }
     if(getpid() == padre){
         close(fd[1]);
-        
         sprintf(str,"pstree -p %d",padre);
         while(read(fd[0],&pid,sizeof(pid_t)) > 0 ){
             system(str);
             kill(pid,SIGTERM);
             printf("%d\n",(int)pid);
         }
-        printf("Se termino");
+        kill(pid,SIGKILL); //should kill the last process 
+        wait(NULL);
+        system(str);
+        printf("Se termino\n");
         fflush(stdout);
         close(fd[0]);
-        for(;;);
     }
     else{
         close(fd[0]);                                                              ;

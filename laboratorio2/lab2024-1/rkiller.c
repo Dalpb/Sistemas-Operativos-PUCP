@@ -68,6 +68,9 @@ int main(int argc,char *argv[]){
         system(str);
         kill(pid,SIGKILL);
     }
+      kill(pid,SIGKILL); //should kill the last process 
+        wait(NULL);
+        system(str);
     close(fd[0]);
     close(fd_random[0]);
     return 0;

@@ -43,7 +43,7 @@ void creaArbol(int n,int i){
     if(getpid() == padre){
         read(fd[0],&pid,sizeof(pid)); 
         char str[50];
-        sprintf(str,"pstree -p %d",getpid());
+        sprintf(str,"pstree -p %d > arbol.txt",getpid());
         system(str);
     }
     for(int j=0; j<n;j++){
