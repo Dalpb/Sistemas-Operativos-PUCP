@@ -14,7 +14,7 @@ int main(int argc,char *argv[]){
     }
     int nprocs = atoi(argv[1]);
     int fd[2],i,fd_random[2];
-
+    
     pid_t pids[nprocs], root = getpid(),child;
     pipe(fd);
     pipe(fd_random);
@@ -30,7 +30,7 @@ int main(int argc,char *argv[]){
     }
     close(fd[1]); //its necessary close every pipe in each process
     if(getpid() == root){
-        int pid,j = 0;
+        pid_t pid,j = 0;
         //get all pids created
         while(read(fd[0],&pid,sizeof(pid)) !=0){
             pids[j] = pid;
@@ -38,14 +38,14 @@ int main(int argc,char *argv[]){
         }
         //get random process
         int random = rand()% (nprocs);
-        int pid_random = pids[random];
+        pid_t pid_random = pids[random];
         printf("Root %d: continue process %d\n",getpid(),pid_random);
         //create another pipe for the random process
         for(int i= 0;i<nprocs;i++){
             //if(pids[i] == pid_random)pids[i] = getpid();
             if(pids[i] == pid_random)continue;
 
-            int pid = pids[i];
+            pid_t pid = pids[i];
             write(fd_random[1],&pid,sizeof(pid));
         }
         pid = getpid();
@@ -60,18 +60,20 @@ int main(int argc,char *argv[]){
 
     printf("I'am the process %d\n",getpid());
     char str[100];
-    int pid;
+    pid_t pid;
+    sprintf(str,"pstree -ps %d ",getpid());
     while(read(fd_random[0],&pid,sizeof(pid)) !=0){
-        sprintf(str,"pstree -ps %d ",getpid());
         printf("%s - %d\n",str,pid);
         //use sleep for fix syncronized problems between kill and system --> news: if we kill the root process, this doesnt work
         system(str);
+        sleep(1);
         kill(pid,SIGKILL);
+        sleep(1);
     }
-      kill(pid,SIGKILL); //should kill the last process 
-        wait(NULL);
-        system(str);
+    wait(NULL);
+    system(str);
     close(fd[0]);
     close(fd_random[0]);
+    exit(1);
     return 0;
 }

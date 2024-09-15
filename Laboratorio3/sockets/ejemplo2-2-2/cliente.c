@@ -17,11 +17,11 @@ int main(int argc,char *argv[]){
     ssize_t numRead;
     char buf[BUF_SIZE];
 
-    sfd = socket(AF_UNIX,SOCK_STREAM,0);
+    sfd = socket(AF_UNIX,SOCK_STREAM,0); //crea un socket en local
     if(sfd == -1)
         perror("socket");
     
-    memset(&addr,0,sizeof(struct sockaddr_un));
+    memset(&addr,0,sizeof(struct sockaddr_un)); //inicializa la strucutura
 
     addr.sun_family=AF_UNIX;
     strncpy(addr.sun_path,SV_SOCK_PATH,sizeof(addr.sun_path) -1);
