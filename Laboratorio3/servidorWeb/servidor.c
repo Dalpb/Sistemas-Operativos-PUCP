@@ -59,7 +59,7 @@ int main(int argc,char *argv[]){
             "Content-Type: text/html\r\n" //tipo text/html
             "Connection: close\r\n" 
             "\r\n"
-            "<!DOCTYPE html>" //contendio body de response
+            "<!DOCTYPE html>" //contenido de body de response
             "<html>"
             "<head><title>Servidor Web en C</title>"
             "<style>"
@@ -67,7 +67,7 @@ int main(int argc,char *argv[]){
             "</style>"
             "</head>"
             "<body><h1>Hola, Mundo desde C!</h1><button id=\"btn\">Click <span id=\"number\">0</span></button>"
-            "<script>btn=document.getElementById(\"btn\");span=document.getElementById(\"number\");btn.addEventListener(\"click\",()=>{span.innerText = parseInt(span.innerText) + 1;;})</script>"
+            "<script>const btn=document.getElementById(\"btn\");const span=document.getElementById(\"number\");btn.addEventListener(\"click\",()=>{span.innerText = parseInt(span.innerText) + 1;;})</script>"
             "</body>"
             "</html>";
 
