@@ -42,7 +42,7 @@ int main(int argc,char *argv[]){
             perror("accept");
         //el servidor lee lo mandado por el cliente en el socket cfd
         while((numRead = read(cfd,buf,BUF_SIZE)) >0)
-            //lo leido del cfd, lo escribe en su salida
+            //lo leido del cfd, lo escribe en su salidA
             if(write(STDOUT_FILENO,buf,numRead) != numRead)
                 perror("partial/failed write");
 

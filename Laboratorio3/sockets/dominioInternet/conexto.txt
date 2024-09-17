@@ -1,0 +1,2 @@
+Esta conexión de sockets se basa en una simple request y response por medio del protocolo IPV4
+EL cliente le manda 'A' y el servidor envia 'B' y el cliente lo lee.
