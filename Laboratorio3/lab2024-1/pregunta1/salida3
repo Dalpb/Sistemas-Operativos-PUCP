@@ -1,0 +1,9 @@
+S.ficheros     bloques de 1K   Usados Disponibles Uso% Montado en
+tmpfs                 802068     2004      800064   1% /run
+/dev/sda5           23854928 20023780     2594056  89% /
+tmpfs                4010324    12404     3997920   1% /dev/shm
+tmpfs                   5120        4        5116   1% /run/lock
+efivarfs                  88       83           1 100% /sys/firmware/efi/efivars
+/dev/sda7           74237860 23964020    46457036  35% /home
+/dev/sda1              98304    32138       66166  33% /boot/efi
+tmpfs                 802064      140      801924   1% /run/user/1000
