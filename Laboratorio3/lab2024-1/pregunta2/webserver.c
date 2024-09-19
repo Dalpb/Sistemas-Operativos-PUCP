@@ -20,8 +20,8 @@ char * read_file(char * buf, int num_buf) {
     cp = buf + 5;
     cp2 = strstr(cp, " HTTP"); // I get a pointer in _HTTP
     if (cp2 != NULL) *cp2 = '\0';   
-    //cp -> /index 
-    f = fopen(cp, "r");//reads index's content
+    //cp point a string -> /index.html
+    f = fopen(cp, "r");//reads index.html's content
     if (f == NULL) return error_return;
     i = fread(ret_buf, 1, 32768, f);    
     if (i == 0) { fclose(f); return error_return; }
@@ -41,8 +41,8 @@ void *thread_func(void * tsocket) {
     buffer[n]='\0';//limit the buffer
     printf("%s",buffer);
     pbuf=read_file(buffer,4000);
-    write(c_sockfd, heading, strlen(heading));
-    write(c_sockfd,pbuf,strlen(pbuf)); //Response struct
+    write(c_sockfd, heading, strlen(heading)); //send the header protocol
+    write(c_sockfd,pbuf,strlen(pbuf)); //send the html content
     close(c_sockfd);
     pthread_exit(NULL);    
 }	
