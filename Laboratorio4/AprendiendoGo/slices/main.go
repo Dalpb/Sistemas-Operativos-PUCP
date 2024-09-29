@@ -27,7 +27,7 @@ func main() {
 	slice2 = slice2[0:4]
 	fmt.Println(slice2, len(slice2), cap(slice2))
 
-	//si quiero extende más que la capacdiad, esto cambia auto la capacidad
+	//si quiero extende más que la capacdiad, esto cambia auto la capacidad ,por 2
 	slice2 = append(slice2, 2, 3, 5, 1, 53)
 	fmt.Println(slice2, len(slice2), cap(slice2))
 

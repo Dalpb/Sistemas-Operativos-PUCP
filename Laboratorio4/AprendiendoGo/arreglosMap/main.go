@@ -32,7 +32,7 @@ func main() {
 	)
 
 	arr3 := [5]float32{1.2, 2.3, 3.4, 4.5, 5.6}
-
+	
 	fmt.Println("Tenemos un conjutno de vectores: ", arr2)
 	fmt.Println("Quiero el componenete x del segundo vector", arr2[1].x)
 
