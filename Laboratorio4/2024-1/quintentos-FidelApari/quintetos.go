@@ -18,6 +18,7 @@ func config() {
 }
 
 func asign(i int) {
+
 	canales[i] <- struct{}{}
 }
 
@@ -39,7 +40,7 @@ func sincronizacion() {
 
 	fmt.Printf("\n") //print
 
-	go sincronizacion() //again 
+	go sincronizacion() //again
 }
 
 func task(n int) {
