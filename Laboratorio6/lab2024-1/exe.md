@@ -1,0 +1,1 @@
+gcc xrunNFit.c xalloc.c -o xrunNFit -lm
