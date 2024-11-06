@@ -4,6 +4,8 @@
 #include <math.h>
 
 void *xmalloc (size_t nbytes);
+void viewList();
+void xfree(void *ap);
 
 int main(void)
 { unsigned int x,unidad,base;
@@ -17,9 +19,15 @@ int main(void)
     if((pt=(unsigned int *)xmalloc(base*unidad))) 
        fprintf(stdout,"Se solicitaron %d bytes y estan ubicados en %p\n",base*unidad,pt);
     else
-       fprintf(stderr,"No hay suficiente memoria\n");       
-    x++; }
-  while(x<=6);      
+       fprintf(stderr,"No hay suficiente memoria\n");  
+    viewList();
+    x++; 
+  }
+  while(x<=6);
+
+
+
+
   exit(0);                  
   
 }

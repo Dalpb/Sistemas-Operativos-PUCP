@@ -12,7 +12,7 @@
 
 #include <unistd.h>
 #include "xalloc.h"
-
+#include <stdio.h>
 /*
  * Definicion de la cabecera para huecos y bloques.
  * La union con un campo de tipo Align fuerza que el tama~no
@@ -61,13 +61,12 @@ static Header *morecore(size_t nu)
 	char *cp;
 	Header *up;
 
-	if (nu < NALLOC)
-		nu = NALLOC;
-	cp= sbrk(nu * sizeof(Header));
+	if (nu < NALLOC)nu = NALLOC;
+	cp= sbrk(nu * sizeof(Header)); /*pedimos nu*sizeof(Header) bytes y reserva memoria, pointer -> |HEADER |HEADER |HEADER |HEADER |HEADER |HEADER | -> */
 	if (cp == (char *) -1) /* no space at all */
 		return NULL;
-	up = (Header *) cp;
-	up ->s.size = nu;
+	up = (Header *) cp; /*asignamos un puntero al espacio liberado*/
+	up ->s.size = nu; /*colocamos la cantidad unitaria a*/
 	xfree((void *)(up+1));
 	return freep;
 }
@@ -85,7 +84,7 @@ void *xmalloc (size_t nbytes)
 	   El termino "+ 1" es para incluir la propia cabecera.
 	*/
 	nunits = (nbytes+sizeof(Header)-1)/sizeof(Header) + 1;
-
+	printf("%zu unidades :\n",nunits);
 
 	/* En la primera llamada se construye una lista de huecos con un
 	   unico elemento de tama~no cero (base) que se apunta a si mismo */
@@ -100,28 +99,28 @@ void *xmalloc (size_t nbytes)
 	   o da toda una vuelta a la lista (no hay espacio suficiente)
 	*/
 	for (p= prevp->s.ptr; ; prevp = p, p = p->s.ptr){
-		if (p->s.size >= nunits) {  /* big enough */
-			if (p->s.size == nunits)  /* exactly */
+		printf("%zu \n",p->s.size);
+		if (p->s.size >= nunits) {  /*encontramos hueco*/
+			if (p->s.size == nunits)  /* el hueco es exacto */
 				prevp->s.ptr = p->s.ptr;
 			else {  /* allocate tail end */
-					p->s.size -= nunits;
-					p+= p->s.size;
-					p->s.size = nunits;
+				p->s.size -= nunits;
+				p+= p->s.size;
+				p->s.size = nunits;
 			}
-			freep = prevp; /* estrategia next-fit */
-			return (void *)(p+1); /* devuelve un puntero a la
-						 zona de datos del bloque */
+			freep = prevp; /* estrategia next-fit: un  bloque antes del que se asigno */
+			return (void *)(p+1); /* devuelve un puntero a la zona de datos del bloque */
 		}
 		/* Si ha dado toda la vuelta pide mas memoria y vuelve
 		   a empezar */
-		if (p == freep) /* wrapped around free list */
+		if(p == freep) /* wrapped around free list */
 			if ((p = morecore(nunits)) == NULL)
-				return NULL;  /* none left */
+				return NULL;  /* si no puede dar más memoria, retorna null */
 	}
 }
 
 
-/* xfree: put block ap in the free list */
+/* xfree: put block ap in the free list provided by morecore */
 void xfree(void *ap)
 {
 	Header *bp, *p;
@@ -143,7 +142,7 @@ void xfree(void *ap)
 		del for)
 	*/
 
-	for (p= freep; !(bp > p && bp < p->s.ptr); p = p->s.ptr)
+	for (p= freep; !(bp > p && bp < p->s.ptr); p = p->s.ptr) //condicion para que se coloque en orden por direcciones
 		if (p >= p->s.ptr && (bp > p || bp < p->s.ptr))
 			break;  /* freed block at start or end of arena */
 
@@ -165,7 +164,23 @@ void xfree(void *ap)
 	freep = p; /* estrategia next-fit */
 }
 
-void *xrealloc(void * ptr, size_t size)
-{
+
+void *xrealloc(void * ptr, size_t size){
 	return NULL;
+}
+void viewList(){
+	Header *p;
+	printf("List's hole\n");
+
+	if(freep == NULL){
+		printf("List is empty \n");
+		return ;
+	}
+	p = freep;
+	do{
+		printf("Address %p , %zu \n",(void *)(p),p->s.size);
+		p = p->s.ptr;
+	}while(p !=freep);
+
+	printf("End of the list\n");
 }
