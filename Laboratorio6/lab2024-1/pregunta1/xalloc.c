@@ -84,7 +84,7 @@ void *xmalloc (size_t nbytes)
 	   El termino "+ 1" es para incluir la propia cabecera.
 	*/
 	nunits = (nbytes+sizeof(Header)-1)/sizeof(Header) + 1;
-	printf("%zu unidades :\n",nunits);
+	printf("Necesito de %zu unidades\n",nunits);
 
 	/* En la primera llamada se construye una lista de huecos con un
 	   unico elemento de tama~no cero (base) que se apunta a si mismo */
@@ -99,7 +99,6 @@ void *xmalloc (size_t nbytes)
 	   o da toda una vuelta a la lista (no hay espacio suficiente)
 	*/
 	for (p= prevp->s.ptr; ; prevp = p, p = p->s.ptr){
-		printf("%zu \n",p->s.size);
 		if (p->s.size >= nunits) {  /*encontramos hueco*/
 			if (p->s.size == nunits)  /* el hueco es exacto */
 				prevp->s.ptr = p->s.ptr;
@@ -170,17 +169,23 @@ void *xrealloc(void * ptr, size_t size){
 }
 void viewList(){
 	Header *p;
-	printf("List's hole\n");
-
 	if(freep == NULL){
 		printf("List is empty \n");
 		return ;
 	}
-	p = freep;
+	p = &base;
+	printf("-----------------------------------------\n");
+	printf("Empezamos el puntero freep que es %p:\n",freep);
 	do{
-		printf("Address %p , %zu \n",(void *)(p),p->s.size);
+		printf("Address %p,Unidades: %zu \n",(void *)(p),p->s.size);
 		p = p->s.ptr;
-	}while(p !=freep);
+	}while(p != &base);
 
-	printf("End of the list\n");
+	printf("--------------------------------------------\n\n\n");
+}
+size_t getUnit(size_t bytes){
+	return (bytes+sizeof(Header)-1)/sizeof(Header) + 1;
+}
+size_t getBytes(size_t units){
+	return ((units-1)*sizeof(Header)) +1 - sizeof(Header);
 }
