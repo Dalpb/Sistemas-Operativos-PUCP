@@ -76,7 +76,7 @@ void *xmalloc (size_t nbytes)
 {
 	Header  *p, *prevp;
 	size_t nunits;
-
+	printf("Empezamos a buscar desde freep -> %p\n\n",freep);
 	/*
 	   Calcula cuanto ocupara la peticion medido en tama~nos de
 	   cabecera (incluyendo la propia cabecera).
@@ -107,7 +107,9 @@ void *xmalloc (size_t nbytes)
 				p+= p->s.size;
 				p->s.size = nunits;
 			}
+			printf("El bloque a asignar se encuentra a asignar está en %p\n",p);
 			freep = prevp; /* estrategia next-fit: un  bloque antes del que se asigno */
+			printf("El freep apuntará %p\n",freep);
 			return (void *)(p+1); /* devuelve un puntero a la zona de datos del bloque */
 		}
 		/* Si ha dado toda la vuelta pide mas memoria y vuelve
@@ -173,13 +175,13 @@ void viewList(){
 		printf("List is empty \n");
 		return ;
 	}
-	p = &base;
+	p = freep;
 	printf("-----------------------------------------\n");
-	printf("Empezamos el puntero freep que es %p:\n",freep);
+	printf("el puntero freep que es %p:\n",freep);
 	do{
 		printf("Address %p,Unidades: %zu \n",(void *)(p),p->s.size);
 		p = p->s.ptr;
-	}while(p != &base);
+	}while(p != freep);
 
 	printf("--------------------------------------------\n\n\n");
 }
