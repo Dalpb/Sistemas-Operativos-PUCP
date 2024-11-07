@@ -165,7 +165,7 @@ void xfree(void *ap)
 	} else
 		p->s.ptr = bp;
 
-	freep = p; /* estrategia next-fit */
+
 }
 
 void *xrealloc(void * ptr, size_t size)
